@@ -1,0 +1,71 @@
+
+RM=rm
+CP=cp
+
+
+LDSCRIPT=stm32_flash.ld
+
+# ARM compiler and tools
+DEVC_PREFIX=arm-none-eabi-
+CC=$(DEVC_PREFIX)gcc
+CXX=$(DEVC_PREFIX)g++
+AS=$(DEVC_PREFIX)gcc -x assembler-with-cpp
+LD=$(DEVC_PREFIX)g++
+RE=$(DEVC_PREFIX)readelf
+SIZE=$(DEVC_PREFIX)size
+OBJCOPY=$(DEVC_PREFIX)objcopy
+DUMP=$(DEVC_PREFIX)objdump
+
+
+CFLAGS = -O0 -fsingle-precision-constant -Wall -Wa,-adhlns="$@.lst" \
+ -c -fmessage-length=0 -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -nostartfiles -DSTM32F40_41xxx
+
+CXXFLAGS = -O0 -fsingle-precision-constant -Wall -std=gnu++0x \
+ -Wa,-adhlns="$@.lst" -fno-exceptions -fno-rtti -c -fmessage-length=0 \
+ -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -nostartfiles -DSTM32F40_41xxx
+
+LDFLAGS =  -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -DSTM32F40_41xxx
+
+#-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 
+
+#LDFLAGS = -nostdlib -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g3 -gdwarf-2
+#  -nostartfiles
+
+CFLAGS += $(INCLUDEFLAGS)
+CXXFLAGS += $(INCLUDEFLAGS)
+#LDFLAGS += $(INCLUDEFLAGS)
+
+ASFLAGS = $(INCLUDEFLAGS) -T $(LDSCRIPT) -Wall -Wa,-adhlns="$@.lst" -c -fmessage-length=0 \
+ -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g3 -gdwarf-2  -DSTM32F40_41xxx
+
+
+
+# make a list of the .o files taken from the .c files
+find_ofiles=$(patsubst $(dir)/%.cc,$(dir)/%.o,$(wildcard $(dir)/*.cc))
+find_ofiles+=$(patsubst $(dir)/%.c,$(dir)/%.o,$(wildcard $(dir)/*.c))
+find_ofiles+=$(patsubst $(dir)/%.s,$(dir)/%.o,$(wildcard $(dir)/*.s))
+
+# get a list of all the source files
+find_sfiles=$(wildcard $(dir)/*.cc)
+find_sfiles+=$(wildcard $(dir)/*.c)
+find_sfiles+=$(wildcard $(dir)/*.s)
+find_sfiles+=$(wildcard $(dir)/*.h)
+find_sfiles+=$(wildcard $(dir)/*.def)
+find_sfiles+=$(wildcard $(dir)/*.hidecc)
+
+# get a list of all the directories to set -I include for compilation
+find_hdirs= -I $(dir)
+# get a list of all the header files - used in INCDIRS
+find_hfiles = $(wildcard $(dir)/*.h)
+
+# Flags for objcopy tool to make the binary file
+OBJCOPY_FLAGS=
+
+
+#get a list of only the header files.  Used for limited source releases
+find_hfiles = $(wildcard $(dir)/*.h)
+
+# get a list of all the directories to set -I include for compilation
+find_hdirs = -I $(dir)
+
+
