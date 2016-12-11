@@ -57,95 +57,99 @@
  */
 
 
-CGPIO_PP LaserOn(RCC_AHB1Periph_GPIOC, GPIOC, GPIO_Pin_6);
-CGPIO_OD StatusLED(RCC_AHB1Periph_GPIOC, GPIOC, GPIO_Pin_0);
+//CGPIO_PP LaserOn(RCC_AHB1Periph_GPIOC, GPIOC, GPIO_Pin_6);
 
-CGPIO_PP Reset1(RCC_AHB1Periph_GPIOA, GPIOA, GPIO_Pin_7);
-CGPIO_PP Reset2(RCC_AHB1Periph_GPIOA, GPIOA, GPIO_Pin_8);
-
-CUART3Port DebugUart;
-
-CPWM PWM_CONTROLLER;
-
-extern ControlManager CONTROL_MANAGER;
-
-CADC DMA_ADC(&CONTROL_MANAGER);
-int nFrequency = 100000;
-CTimerDMA ADC_Trigger(nFrequency);
-
-CDAC DAC_ADJ;
-
-
-CommandInterface CMD_INTERFACE(&CONTROL_MANAGER,
-        &DebugUart,
-        &StatusLED);
-
-
-ControlManager CONTROL_MANAGER(&CMD_INTERFACE,
-        &PWM_CONTROLLER,
-        &LaserOn,
-        &DAC_ADJ,
-        1.0/(float)nFrequency);
-
-//CGPIO_OD DAC_ADJ( RCC_AHB1Periph_GPIOA, GPIOA, GPIO_Pin_4);
-
-
-void UART3Interupt(void)
-{
-	DebugUart.HandleInterupt();
-}
-
+CGPIO_OD StatusLED(RCC_AHB1Periph_GPIOB, GPIOB, GPIO_Pin_0);
+//
+//CGPIO_PP Reset1(RCC_AHB1Periph_GPIOA, GPIOA, GPIO_Pin_7);
+//CGPIO_PP Reset2(RCC_AHB1Periph_GPIOA, GPIOA, GPIO_Pin_8);
+//
+//CUART2Port DebugUart;
+//
+//CPWM PWM_CONTROLLER;
+//
+//extern ControlManager CONTROL_MANAGER;
+//
+//CADC DMA_ADC(&CONTROL_MANAGER);
+//int nFrequency = 100000;
+//CTimerDMA ADC_Trigger(nFrequency);
+//
+//CDAC DAC_ADJ;
+//
+//
+//CommandInterface CMD_INTERFACE(&CONTROL_MANAGER,
+//        &DebugUart,
+//        &StatusLED);
+//
+//
+//ControlManager CONTROL_MANAGER(&CMD_INTERFACE,
+//        &PWM_CONTROLLER,
+//        &LaserOn,
+//        &DAC_ADJ,
+//        1.0/(float)nFrequency);
+//
+////CGPIO_OD DAC_ADJ( RCC_AHB1Periph_GPIOA, GPIOA, GPIO_Pin_4);
+//
+//
+//void UART3Interupt(void)
+//{
+//	DebugUart.HandleInterupt();
+//}
+//
 
 
 int main(void)
 {
 
 
-
-	PWM_CONTROLLER.Init();
-	PWM_CONTROLLER.SetChannel1(15.0);
-    PWM_CONTROLLER.SetChannel2(15.0);
-    PWM_CONTROLLER.SetChannel3(15.0);
-    PWM_CONTROLLER.SetChannel4(15.0);
-
-
-    Reset1.Init();
-    Reset2.Init();
-    Reset1.SetLow();
-    Reset2.SetLow();
+//
+//	PWM_CONTROLLER.Init();
+//	PWM_CONTROLLER.SetChannel1(15.0);
+//    PWM_CONTROLLER.SetChannel2(15.0);
+//    PWM_CONTROLLER.SetChannel3(15.0);
+//    PWM_CONTROLLER.SetChannel4(15.0);
+//
+//
+//    Reset1.Init();
+//    Reset2.Init();
+//    Reset1.SetLow();
+//    Reset2.SetLow();
 
     StatusLED.Init();
-    LaserOn.Init();
-
-    Reset1.SetHigh();
-    Reset2.SetHigh();
-
-    //wait for the mirrors to position to about center before starting the control loops
-    for(int x = 0; x < 100000; x++)
-    {
-        ;
-    }
-
-
-    DebugUart.Init();
-
-    DMA_ADC.Init();
-    
-    DAC_ADJ.Init();
-    DAC_ADJ.SetDAC(2.00);
-    LaserOn.SetHigh();
-    ADC_Trigger.Init();
-    //DAC_ADJ.Init();
-    //DAC_ADJ.SetLow();
-
-    CMD_INTERFACE.MainWileLoop();
+//    LaserOn.Init();
+//
+//    Reset1.SetHigh();
+//    Reset2.SetHigh();
+//
+//    //wait for the mirrors to position to about center before starting the control loops
+//    for(int x = 0; x < 100000; x++)
+//    {
+//        ;
+//    }
+//
+//
+//    DebugUart.Init();
+//
+//    DMA_ADC.Init();
+//
+//    DAC_ADJ.Init();
+//    DAC_ADJ.SetDAC(2.00);
+//    LaserOn.SetHigh();
+//    ADC_Trigger.Init();
+//    //DAC_ADJ.Init();
+//    //DAC_ADJ.SetLow();
+//
+//    CMD_INTERFACE.MainWileLoop();
 
 	while(1)
 	{
 	    StatusLED.Toggle();
-	    for( int x = 0; x > 0; x++)
+	    for( int x = 0; x < 200000; x++)
 	    {
-	        ;
+	    	for( int y = 0; x < 20000; x++)
+	    		{
+	    		;
+	    		}
 	    }
 
 	}

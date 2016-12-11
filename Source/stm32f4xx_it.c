@@ -137,7 +137,7 @@ void PendSV_Handler(void)
 
 void USART3_IRQHandler(void)
 {
-	UART3Interupt();
+	//UART3Interupt();
 }
 
 /******************************************************************************/

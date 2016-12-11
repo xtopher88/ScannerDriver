@@ -96,5 +96,32 @@ public:
     void Init();
 };
 
+/// specific initialization
+class CUART2Port: public CUARTDevice
+{
+protected:
+    unsigned int m_nBaudRate;
+    //transmitt and recieve buffers
+    CBuffer<char,1024> m_TxBuffer;
+    static const int RX_BUFFER_SIZE = 256;
+    char m_RxBuffer[RX_BUFFER_SIZE];
+    int m_nRxIndex;
+public:
+    char m_TransferBuffer[RX_BUFFER_SIZE];
+    int m_nTransferIndex;
+    CUART2Port(unsigned int nBaud = 57600
+                ):CUARTDevice( &m_TxBuffer,
+                        USART2,
+                        m_RxBuffer,
+                        m_TransferBuffer,
+                        RX_BUFFER_SIZE),
+                   m_nBaudRate(nBaud)
+    {
+        m_nTransferIndex=0;
+        m_nRxIndex=0;
+    }
+    /// Sets up the specifics for the SPI, and pins
+    void Init();
+};
 
 #endif //_PERIPHERAL_H
