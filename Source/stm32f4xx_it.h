@@ -65,6 +65,7 @@ void DebugMon_Handler(void);
 void PendSV_Handler(void);
 void USART3_IRQHandler(void);
 void SPI2_IRQHandler(void);
+void SysTick_Handler(void);
 
 #ifdef __cplusplus
 }

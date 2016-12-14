@@ -41,7 +41,7 @@ void CDAC::Init()
 //0 to 3.3 floating point value
 void CDAC::SetDAC(float fValue)
 {
-	uint16_t nData = fValue * 4095 / 3.3;
-	if(nData > 4095) nData = 4095;
-	DAC_SetChannel1Data(DAC_Align_12b_R, nData);
+    uint16_t nData = fValue * 4095 / 3.3;
+    if(nData > 4095) nData = 4095;
+    DAC_SetChannel1Data(DAC_Align_12b_R, nData);
 }

@@ -19,7 +19,7 @@ class CDAC
 {
 protected:
 public:
-	CDAC()
+    CDAC()
     {
     }
     void Init();

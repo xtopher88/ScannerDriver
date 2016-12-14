@@ -2,6 +2,7 @@
 #include "stm32f4xx_conf.h" 
 #include "stm32f4xx_rcc.h"
 #include "main.h"
+#include "stm32f4xx.h"
 
 
 #include "Peripheral.h"
@@ -23,6 +24,14 @@
 #include "Path.h"
 
 #include "Control.h"
+
+#include "Scheduler.h"
+
+
+void SysTick_Handler(void)
+{
+    Scheduler::getScheduler().TimerUpdate();
+}
 /*
  * ADC Inputs
  * Sens1 PA0
@@ -74,7 +83,7 @@ CGPIO_OD StatusLED(RCC_AHB1Periph_GPIOB, GPIOB, GPIO_Pin_0);
 //int nFrequency = 100000;
 //CTimerDMA ADC_Trigger(nFrequency);
 //
-//CDAC DAC_ADJ;
+CDAC DAC_ADJ;
 //
 //
 //CommandInterface CMD_INTERFACE(&CONTROL_MANAGER,
@@ -93,7 +102,7 @@ CGPIO_OD StatusLED(RCC_AHB1Periph_GPIOB, GPIOB, GPIO_Pin_0);
 //
 //void UART3Interupt(void)
 //{
-//	DebugUart.HandleInterupt();
+//    DebugUart.HandleInterupt();
 //}
 //
 
@@ -103,8 +112,8 @@ int main(void)
 
 
 //
-//	PWM_CONTROLLER.Init();
-//	PWM_CONTROLLER.SetChannel1(15.0);
+//    PWM_CONTROLLER.Init();
+//    PWM_CONTROLLER.SetChannel1(15.0);
 //    PWM_CONTROLLER.SetChannel2(15.0);
 //    PWM_CONTROLLER.SetChannel3(15.0);
 //    PWM_CONTROLLER.SetChannel4(15.0);
@@ -141,16 +150,16 @@ int main(void)
 //
 //    CMD_INTERFACE.MainWileLoop();
 
-	while(1)
-	{
-	    StatusLED.Toggle();
-	    for( int x = 0; x < 200000; x++)
-	    {
-	    	for( int y = 0; x < 20000; x++)
-	    		{
-	    		;
-	    		}
-	    }
+    while(1)
+    {
+        StatusLED.Toggle();
+        for( int x = 0; x < 200000; x++)
+        {
+            for( int y = 0; x < 20000; x++)
+                {
+                ;
+                }
+        }
 
-	}
+    }
 }

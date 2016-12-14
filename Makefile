@@ -41,7 +41,7 @@ CXXFLAGS = -O0 -fsingle-precision-constant -Wall -std=gnu++0x \
  -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -nostartfiles \
  $(INCLUDEFLAGS) -DSTM32F446xx
 
-LDFLAGS =  -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g3 -gdwarf-2
+LDFLAGS =  -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -specs=nosys.specs
 
 ASFLAGS = $(INCLUDEFLAGS) -T $(LDSCRIPT) -Wall -Wa,-adhlns="$@.lst" -c -fmessage-length=0 \
  -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -g3 -gdwarf-2 -DSTM32F446xx
